@@ -40,8 +40,8 @@ class exim::gentoo inherits exim::base {
         mode  => 644,
         ensure => present,
         source => [
-            "puppet://$server/dist/exim/conf.d/${fqdn}/exim",
-            "puppet://$server/dist/exim/conf.d/exim",
+            "puppet://$server/files/exim/conf.d/${fqdn}/exim",
+            "puppet://$server/files/exim/conf.d/exim",
             "puppet://$server/exim/conf.d/exim"
         ]
     }
