@@ -1,1 +1,1 @@
-class exim::munin::disable {}
+class exim::munin::disable inherits exim::munin {}
