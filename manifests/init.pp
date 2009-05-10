@@ -2,8 +2,6 @@
 # Copyright (C) 2007 admin@immerda.ch
 #
 
-# modules_dir { "exim": }
-
 class exim {
     case $operatingsystem {
         gentoo: { include exim::gentoo }
