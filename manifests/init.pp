@@ -21,6 +21,9 @@ class exim::base {
         require => Package[exim],
     }
 
+    if $use_munin {
+        include exim::munin
+    }
 }
 
 class exim::gentoo inherits exim::base {
