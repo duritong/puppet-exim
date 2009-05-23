@@ -1,5 +1,5 @@
 class exim::munin::disable inherits exim::munin {
-  File{'/var/lib/munin/plugin-state/exim_mailstats']{
+  File['/var/lib/munin/plugin-state/exim_mailstats']{
     ensure => absent,
   }
 
