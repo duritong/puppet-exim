@@ -6,22 +6,6 @@ class exim::disable inherits exim {
         linux: { include exim::disable::base }
     }
     if $use_munin {
-        include exim::munin::disable
-    }
-}
-
-class exim::disable::base inherits exim::base {
-    Package[exim]{
-        ensure => absent,
-    }
-
-    File['/etc/exim/exim.conf']{
-      source => undef,
-      ensure => absent,
-    }
-
-    Service[exim]{
-        enable => false,
-        ensure => stopped,
+        include ::exim::munin::disable
     }
 }
