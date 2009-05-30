@@ -10,6 +10,7 @@ class exim::munin {
     'exim_mailstats':
       config => 'group exim';
     'exim_mailqueue':
-      config => 'group exim';
+      config => "env.exim /usr/sbin/exim
+group exim";
   }
 }

@@ -18,8 +18,4 @@ class exim::base {
         notify => Service['exim'],
         owner => root, group => mail, mode => 0640;
     }
-
-    if $use_munin {
-        include exim::munin
-    }
 }

@@ -7,4 +7,7 @@ class exim {
         gentoo: { include exim::gentoo }
         default: { include exim::base }
     }
+    if $use_munin {
+        include exim::munin
+    }
 }
