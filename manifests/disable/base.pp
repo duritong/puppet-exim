@@ -11,5 +11,6 @@ class exim::disable::base inherits exim::base {
     Service[exim]{
         enable => false,
         ensure => stopped,
+        provider => base,
     }
 }
