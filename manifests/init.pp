@@ -10,4 +10,8 @@ class exim {
     if $use_munin {
         include exim::munin
     }
+    if $use_shorewall {
+      include shorewall::rules::smtp
+      include shorewall::rules::smtps
+    }
 }
