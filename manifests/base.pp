@@ -13,7 +13,7 @@ class exim::base {
     file{'/etc/exim/exim.conf':
         source => [ "puppet://$server/files/exim/${fqdn}/exim.conf",
                     "puppet://$server/files/exim/exim.conf",
-                    "puppet://$server/exim/exim.conf" ],
+                    "puppet://$server/modules/exim/exim.conf" ],
         require => Package['exim'],
         notify => Service['exim'],
         owner => root, group => mail, mode => 0640;
