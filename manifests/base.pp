@@ -11,8 +11,8 @@ class exim::base {
     }
 
     file{'/etc/exim/exim.conf':
-        source => [ "puppet://$server/files/exim/${fqdn}/exim.conf",
-                    "puppet://$server/files/exim/exim.conf",
+        source => [ "puppet://$server/modules/site-exim/${fqdn}/exim.conf",
+                    "puppet://$server/modules/site-exim/exim.conf",
                     "puppet://$server/modules/exim/exim.conf" ],
         require => Package['exim'],
         notify => Service['exim'],
