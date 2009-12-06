@@ -19,10 +19,11 @@ class exim::base {
         owner => root, group => mail, mode => 0640;
     }
     file{'/etc/exim/conf.d':
-      source => [ "puppet://$server/modules/site-exim/${fqdn}/conf.d",
-                  "puppet://$server/modules/site-exim/conf.d",
-                  "puppet://$server/modules/common/empty" ],
+      source => "puppet://$server/modules/common/empty",
       ensure => directory,
+      recurse => true,
+      purge => true,
+      force => true,
       require => Package['exim'],
       notify => Service['exim'],
       owner => root, group => mail, mode => 0640;
