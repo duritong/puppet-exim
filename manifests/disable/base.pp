@@ -8,6 +8,11 @@ class exim::disable::base inherits exim::base {
       ensure => absent,
     }
 
+    File['/etc/exim/conf.d']{
+      source => undef,
+      ensure => absent,
+    }
+
     Service[exim]{
         enable => false,
         ensure => stopped,
