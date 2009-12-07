@@ -1,6 +1,6 @@
 define exim::config_snippet($content = 'absent'){
   file{"/etc/exim/conf.d/${name}":
-    require => Packge['exim'],
+    require => Package['exim'],
     notify => Service['exim'],
     owner => root, group => mail, mode => 0640;
   }
