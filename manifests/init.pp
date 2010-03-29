@@ -12,6 +12,7 @@ class exim {
     }
     if $use_shorewall {
       include shorewall::rules::smtp
+      include shorewall::rules::smtp_submission
       include shorewall::rules::smtps
     }
 }
