@@ -1,5 +1,5 @@
 class exim::sql::pgsql {
-  package{'exim-pgqsql':
+  package{'exim-pgsql':
     ensure => present,
   }
 }
