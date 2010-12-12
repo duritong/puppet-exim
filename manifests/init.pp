@@ -2,14 +2,20 @@
 # Copyright (C) 2007 admin@immerda.ch
 #
 
-class exim {
+class exim(
+  $exim_pgsql = false,
+  $exim_mysql = false
+){
   case $operatingsystem {
     gentoo: { include exim::gentoo }
     default: { include exim::base }
   }
 
-  if $exim_sql_pgsql or $exim_sql_mysql {
-    include exim::sql
+  if $exim_pgsql {
+    include exim::sql::pgsql
+  }
+  if $exim_mysql {
+    include exim::sql::mysql
   }
 
   if $use_munin {
