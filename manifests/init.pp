@@ -12,7 +12,7 @@ class exim(
     '465' => 'ssl',
     '587' => 'tls',
     'cert_days' => '10',
-    'hostname' => 'fqdn'
+    'hostname' => $fqdn,
   },
   $manage_shorewall = true
 ){
@@ -45,15 +45,10 @@ class exim(
   }
 
   if $exim::nagios_checks {
-    if $nagios_checks['hostname'] == 'fqdn' {
-      $host_to_check = $fqdn
-    } else {
-      $host_to_check = $nagios_checks['hostname']
-    }
     exim::nagios{$ports:
       checks => $nagios_checks,
-      cert_days => $nagios_checks['cert_days'],
-      host => $host_to_check
+      cert_days => $exim::nagios_checks['cert_days'],
+      host => $exim::nagios_checks['hostname']
     }
   }
 }
