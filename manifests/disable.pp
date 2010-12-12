@@ -1,7 +1,4 @@
-# manifests/disable.pp
-# disable exim
-
-class exim::disable inherits exim {
+class exim::disable {
     case $kernel {
         linux: { include exim::disable::base }
     }
