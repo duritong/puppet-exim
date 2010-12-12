@@ -4,7 +4,7 @@ define exim::nagios(
   $host
 ){
   if $checks[$name] == 'tls' {
-    @@nagios::smtp{
+    @@nagios::service::smtp{
       "${hostname}_${$name}":
         host => $host,
         port => $name,
@@ -15,7 +15,7 @@ define exim::nagios(
         };
     }
   } elsif $checks[$name] == 'ssl' {
-    @@nagios::ssmtp{
+    @@nagios::service::ssmtp{
       "${hostname}_${$name}":
         host => $host,
         port => $name,
