@@ -48,7 +48,7 @@ class exim(
     if $nagios_checks['hostname'] == 'fqdn' {
       $host_to_check = $fqdn
     } else {
-      $host_to_check = $fqdn
+      $host_to_check = $nagios_checks['hostname']
     }
     exim::nagios{$ports:
       checks => $nagios_checks,
