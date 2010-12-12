@@ -11,10 +11,10 @@ class exim(
     default: { include exim::base }
   }
 
-  if $pgsql {
+  if $exim::pgsql {
     include exim::sql::pgsql
   }
-  if $mysql {
+  if $exim::mysql {
     include exim::sql::mysql
   }
 
