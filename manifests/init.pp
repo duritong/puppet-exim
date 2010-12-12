@@ -3,18 +3,18 @@
 #
 
 class exim(
-  $exim_pgsql = false,
-  $exim_mysql = false
+  $pgsql = false,
+  $mysql = false
 ){
   case $operatingsystem {
     gentoo: { include exim::gentoo }
     default: { include exim::base }
   }
 
-  if $exim_pgsql {
+  if $pgsql {
     include exim::sql::pgsql
   }
-  if $exim_mysql {
+  if $mysql {
     include exim::sql::mysql
   }
 
