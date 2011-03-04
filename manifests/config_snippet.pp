@@ -16,4 +16,11 @@ define exim::config_snippet($content = 'absent'){
       content => $content,
     }
   }
+  case $operatingsystem {
+    'debian': {
+      File["/etc/exim/conf.d/${name}"]{
+        path => "/etc/exim4/conf.d/${name}"
+      }
+    }
+  }
 }
