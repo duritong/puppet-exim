@@ -9,12 +9,20 @@ class exim::munin {
     require => Package['exim'],
     owner => nobody, group => $group, mode => 0640;
   }
-
+  $logdir = $opertaingsystem ? {
+    'debian' => '/var/log/exim4',
+    default => '/var/log/exim'
+  }
+  $stats_group = $operatingsystem ? {
+    'debian' => 'adm',
+    default => 'exim'
+  }
   munin::plugin{
     'exim_mailstats':
-      config => "group ${group}";
+      config => "env.logdir ${logdir}
+group ${stats_group}";
     'exim_mailqueue':
       config => "env.exim /usr/sbin/exim
-group exim";
+group $group";
   }
 }
