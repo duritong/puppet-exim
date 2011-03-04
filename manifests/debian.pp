@@ -1,6 +1,6 @@
 class exim::debian inherits exim::base {
     Package['exim']{
-      name => 'exim-base',
+      name => 'exim4-base',
     }
     
     include exim::debian::light

@@ -1,5 +1,5 @@
 class exim::debian::light {
-  package{'exim-daemon-light':
+  package{'exim4-daemon-light':
     ensure => present,
     before => Service['exim'],
   }
