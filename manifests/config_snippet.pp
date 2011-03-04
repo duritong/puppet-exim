@@ -1,8 +1,13 @@
 define exim::config_snippet($content = 'absent'){
+  $group = $operatingsystem ? {
+    'debian' => 'Debian-exim',
+    default => 'exim'
+  }
+  
   file{"/etc/exim/conf.d/${name}":
     require => Package['exim'],
     notify => Service['exim'],
-    owner => root, group => mail, mode => 0640;
+    owner => root, group => $group, mode => 0640;
   }
   if ($content=='absent'){
     File["/etc/exim/conf.d/${name}"]{
