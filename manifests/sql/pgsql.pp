@@ -1,5 +1,10 @@
 class exim::sql::pgsql {
-  package{'exim-pgsql':
-    ensure => present,
+  case $operatingsystem {
+    'debian': { include exim::debian::heavy }
+    default: {
+      package{'exim-pgsql':
+        ensure => present,
+      }
+    }
   }
 }

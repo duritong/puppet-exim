@@ -18,6 +18,7 @@ class exim(
 ){
   case $operatingsystem {
     gentoo: { include exim::gentoo }
+    debian: { include exim::debian }
     default: { include exim::base }
   }
 
