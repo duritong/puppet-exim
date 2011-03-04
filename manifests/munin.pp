@@ -13,6 +13,10 @@ class exim::munin {
     'debian' => '/var/log/exim4',
     default => '/var/log/exim'
   }
+  $logfile = $operatingsystem ? {
+    'debian' => 'mainlog',
+    default => 'main.log'
+  }
   $stats_group = $operatingsystem ? {
     'debian' => 'adm',
     default => 'exim'
@@ -20,6 +24,7 @@ class exim::munin {
   munin::plugin{
     'exim_mailstats':
       config => "env.logdir ${logdir}
+env.logname ${logfile}
 group ${stats_group}";
     'exim_mailqueue':
       config => "env.exim /usr/sbin/exim
