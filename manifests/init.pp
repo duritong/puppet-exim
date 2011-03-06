@@ -39,23 +39,23 @@ class exim(
   }
   if !$localonly {
     if $exim::manage_shorewall {
-	  if array_include($ports,'25') {
-	    include shorewall::rules::smtp
-	  }
-	  if array_include($ports,'587') {
-	    include shorewall::rules::smtp_submission
-	  }
-	  if array_include($ports,'465') {
-	    include shorewall::rules::smtps
-	  }
-	}
+      if array_include($ports,'25') {
+        include shorewall::rules::smtp
+      }
+      if array_include($ports,'587') {
+        include shorewall::rules::smtp_submission
+      }
+      if array_include($ports,'465') {
+        include shorewall::rules::smtps
+      }
+    }
 
     if $exim::nagios_checks {
-	  exim::nagios{$ports:
-	    checks => $nagios_checks,
-	    cert_days => $exim::nagios_checks['cert_days'],
-	    host => $exim::nagios_checks['hostname']
-	  }
-	}
+      exim::nagios{$ports:
+        checks => $nagios_checks,
+        cert_days => $exim::nagios_checks['cert_days'],
+        host => $exim::nagios_checks['hostname']
+      }
+    }
   }
 }
