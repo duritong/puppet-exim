@@ -57,12 +57,10 @@ class exim(
         cert_days => $exim::nagios_checks['cert_days'],
         host => $exim::nagios_checks['hostname']
       }
-      nagios::service{"dnsbl_${fqdn}": }
-      if $exim::nagios_checks['dnsbl'] == true {
-        Nagios::Service["dnsbl_${fqdn}"]{
-          check_command => "check_dnsbl!${exim::nagios_checks['hostname']}",
-        }
-      } else {
+      nagios::service{"dnsbl_${fqdn}":
+        check_command => "check_dnsbl!${exim::nagios_checks['hostname']}",
+      }
+      if $exim::nagios_checks['dnsbl'] != true {
         Nagios::Service["dnsbl_${fqdn}"]{
           ensure => 'absent',
         }
