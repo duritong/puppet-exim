@@ -35,7 +35,6 @@ class exim(
     include exim::greylist
   }
 
-  }
   if $exim::munin_checks {
     include exim::munin
   }
