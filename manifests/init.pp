@@ -5,6 +5,7 @@
 class exim(
   $pgsql = false,
   $mysql = false,
+  $greylist = false,
   $ports = [ '25', '465', '587' ],
   $localonly = false,
   $munin_checks = true,
@@ -30,7 +31,11 @@ class exim(
   if $exim::mysql {
     include exim::sql::mysql
   }
+  if $exim::greylist {
+    include exim::greylist
+  }
 
+  }
   if $exim::munin_checks {
     include exim::munin
   }
