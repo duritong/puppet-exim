@@ -13,6 +13,7 @@ class exim(
     '465' => 'ssl',
     '587' => 'tls',
     'cert_days' => '10',
+    'dnsbl' => true,
     'hostname' => $fqdn,
   },
   $manage_shorewall = true
@@ -55,6 +56,16 @@ class exim(
         checks => $nagios_checks,
         cert_days => $exim::nagios_checks['cert_days'],
         host => $exim::nagios_checks['hostname']
+      }
+      nagios::service{"dnsbl_${fqdn}": }
+      if $exim::nagios_checks['dnsbl'] == true {
+        Nagios::Service["dnsbl_${fqdn}"]{
+          check_command => "check_dnsbl!${exim::nagios_checks['hostname']}",
+        }
+      } else {
+        Nagios::Service["dnsbl_${fqdn}"]{
+          ensure => 'absent',
+        }
       }
     }
   }
