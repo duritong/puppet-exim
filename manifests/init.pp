@@ -34,6 +34,9 @@ class exim(
     include exim::munin
   }
 
+  if $exim::manage_shorewall {
+    include shorewall::rules::out::smtp
+  }
   if !$localonly {
     if $exim::manage_shorewall {
 	  if array_include($ports,'25') {
