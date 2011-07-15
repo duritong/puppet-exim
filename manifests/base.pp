@@ -20,7 +20,6 @@ class exim::base {
         owner => root, group => mail, mode => 0640;
     }
     file{'/etc/exim/conf.d':
-      source => "puppet:///modules/common/empty",
       ensure => directory,
       recurse => true,
       purge => true,
