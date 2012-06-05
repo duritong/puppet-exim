@@ -17,9 +17,12 @@ class exim(
     'dnsbl' => true,
     'hostname' => $fqdn,
   },
-  $manage_shorewall = true
+  $manage_shorewall = true,
+  $component_type = hiera('exim_component_type',''),
+  $component_cluster = hiera('exim_component_cluster',''),
+  $type = ''
 ){
-  case $operatingsystem {
+  case $::operatingsystem {
     gentoo: { include exim::gentoo }
     debian: { include exim::debian }
     default: { include exim::base }

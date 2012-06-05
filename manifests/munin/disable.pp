@@ -4,6 +4,6 @@ class exim::munin::disable inherits exim::munin {
   }
 
   Munin::Plugin['exim_mailstats', 'exim_mailqueue']{
-      ensure => 'absent',
+    ensure => 'absent',
   }
 }

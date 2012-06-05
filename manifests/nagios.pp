@@ -5,7 +5,7 @@ define exim::nagios(
 ){
   if $checks[$name] == 'tls' {
     nagios::service::smtp{
-      "${hostname}_${$name}":
+      "${::hostname}_${$name}":
         host => $host,
         port => $name,
         cert_days => $cert_days ? {
@@ -16,7 +16,7 @@ define exim::nagios(
     }
   } elsif $checks[$name] == 'ssl' {
     nagios::service::ssmtp{
-      "${hostname}_${$name}":
+      "${::hostname}_${$name}":
         host => $host,
         port => $name,
         cert_days => $cert_days ? {

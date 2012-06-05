@@ -1,5 +1,5 @@
 class exim::sql::mysql {
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian': { include exim::debian::heavy }
     default: {
       package{'exim-mysql':

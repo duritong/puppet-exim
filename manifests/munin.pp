@@ -1,5 +1,5 @@
 class exim::munin {
-  $group = $operatingsystem ? {
+  $group = $::operatingsystem ? {
     'debian' => 'Debian-exim',
     default => 'exim'
   }
@@ -9,15 +9,15 @@ class exim::munin {
     require => Package['exim'],
     owner => nobody, group => $group, mode => 0640;
   }
-  $logdir = $operatingsystem ? {
+  $logdir = $::operatingsystem ? {
     'debian' => '/var/log/exim4',
     default => '/var/log/exim'
   }
-  $logfile = $operatingsystem ? {
+  $logfile = $::operatingsystem ? {
     'debian' => 'mainlog',
     default => 'main.log'
   }
-  $stats_group = $operatingsystem ? {
+  $stats_group = $::operatingsystem ? {
     'debian' => 'adm',
     default => 'exim'
   }
@@ -28,6 +28,6 @@ env.logname ${logfile}
 group ${stats_group}";
     'exim_mailqueue':
       config => "env.exim /usr/sbin/exim
-group $group";
+group ${group}";
   }
 }

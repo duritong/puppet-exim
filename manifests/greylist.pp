@@ -1,5 +1,5 @@
 class exim::greylist {
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian': { include exim::debian::heavy }
     default: {
       package{'exim-greylist':
