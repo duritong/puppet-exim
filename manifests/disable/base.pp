@@ -1,19 +1,18 @@
-class exim::disable::base inherits exim::base {
-  Package[exim]{
+class exim::disable::base {
+  package{'exim':
     ensure => absent,
   }
 
-  File['/etc/exim/exim.conf']{
-    source => undef,
-    ensure => absent,
+  file{
+    [ '/etc/exim/exim.conf',
+      '/etc/exim/conf.d' ]:
+      ensure => absent,
+      purge => true,
+      force => true,
+      recurse => true,
   }
 
-  File['/etc/exim/conf.d']{
-    source => undef,
-    ensure => absent,
-  }
-
-  Service[exim]{
+  service{'exim':
     enable => false,
     ensure => stopped,
     hasstatus => false,
