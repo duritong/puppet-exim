@@ -18,8 +18,8 @@ class exim(
     'hostname' => $::fqdn,
   },
   $manage_shorewall = true,
-  $component_type = hiera('exim_component_type',''),
-  $component_cluster = hiera('exim_component_cluster',''),
+  $component_type = '',
+  $component_cluster = '',
   $type = ''
 ){
   case $::operatingsystem {
