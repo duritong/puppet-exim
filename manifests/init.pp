@@ -8,7 +8,7 @@ class exim(
   $greylist = false,
   $ports = [ '25', '465', '587' ],
   $localonly = false,
-  $munin_checks = true,
+  $manage_munin = false,
   $nagios_checks = {
     '25' => 'tls',
     '465' => 'ssl',
@@ -38,7 +38,7 @@ class exim(
     include exim::greylist
   }
 
-  if $exim::munin_checks {
+  if $exim::manage_munin {
     include exim::munin
   }
 

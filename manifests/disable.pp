@@ -2,7 +2,7 @@ class exim::disable {
   case $::kernel {
     linux: { include exim::disable::base }
   }
-  if hiera('use_munin',false) {
+  if $exim::manage_munin {
     include ::exim::munin::disable
   }
 }
