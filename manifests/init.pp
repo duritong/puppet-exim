@@ -20,7 +20,8 @@ class exim(
   $manage_shorewall = true,
   $component_type = '',
   $component_cluster = '',
-  $type = ''
+  $type = '',
+  $default_mta = true,
 ){
   case $::operatingsystem {
     gentoo: { include exim::gentoo }
@@ -40,6 +41,10 @@ class exim(
 
   if $exim::manage_munin {
     include exim::munin
+  }
+
+  if $exim::default_mta {
+    include exim::default
   }
 
   if $exim::manage_shorewall {
