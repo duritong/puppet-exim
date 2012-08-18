@@ -21,7 +21,7 @@ class exim(
   $component_type = '',
   $component_cluster = '',
   $type = '',
-  $default_mta = true,
+  $default_mta = true
 ){
   case $::operatingsystem {
     gentoo: { include exim::gentoo }
