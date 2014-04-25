@@ -2,26 +2,27 @@
 # Copyright (C) 2007 admin@immerda.ch
 #
 
+# manage an exim installation
 class exim(
-  $pgsql = false,
-  $mysql = false,
-  $greylist = false,
-  $ports = [ '25', '465', '587' ],
-  $localonly = false,
-  $manage_munin = false,
-  $nagios_checks = {
-    '25' => 'tls',
-    '465' => 'ssl',
-    '587' => 'tls',
+  $pgsql              = false,
+  $mysql              = false,
+  $greylist           = false,
+  $ports              = [ '25', '465', '587' ],
+  $localonly          = false,
+  $manage_munin       = false,
+  $nagios_checks      = {
+    '25'        => 'tls',
+    '465'       => 'ssl',
+    '587'       => 'tls',
     'cert_days' => '10',
-    'dnsbl' => true,
-    'hostname' => $::fqdn,
+    'dnsbl'     => true,
+    'hostname'  => $::fqdn,
   },
-  $manage_shorewall = true,
-  $component_type = '',
-  $component_cluster = '',
-  $type = '',
-  $default_mta = true
+  $manage_shorewall   = true,
+  $component_type     = '',
+  $component_cluster  = '',
+  $type               = '',
+  $default_mta        = true,
 ){
   case $::operatingsystem {
     gentoo: { include exim::gentoo }
@@ -58,16 +59,16 @@ class exim(
       if '587' in $ports {
         include shorewall::rules::smtp_submission
       }
-      if '465' in $port {
+      if '465' in $ports {
         include shorewall::rules::smtps
       }
     }
 
     if $exim::nagios_checks {
       exim::nagios{$ports:
-        checks => $nagios_checks,
+        checks    => $nagios_checks,
         cert_days => $exim::nagios_checks['cert_days'],
-        host => $exim::nagios_checks['hostname']
+        host      => $exim::nagios_checks['hostname']
       }
       nagios::service{"dnsbl_${::fqdn}":
         check_command => "check_dnsbl!${exim::nagios_checks['hostname']}",
