@@ -52,13 +52,13 @@ class exim(
   }
   if !$localonly {
     if $exim::manage_shorewall {
-      if array_include($ports,'25') {
+      if '25' in $ports {
         include shorewall::rules::smtp
       }
-      if array_include($ports,'587') {
+      if '587' in $ports {
         include shorewall::rules::smtp_submission
       }
-      if array_include($ports,'465') {
+      if '465' in $port {
         include shorewall::rules::smtps
       }
     }
