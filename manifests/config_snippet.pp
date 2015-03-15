@@ -1,31 +1,32 @@
-define exim::config_snippet($content = 'absent'){
-  $group = $::operatingsystem ? {
-    'debian' => 'Debian-exim',
-    default => 'exim'
+# manage a config snippet
+define exim::config_snippet(
+  $content = 'absent',
+){
+  if $::operatingsystem in ['Debian'] {
+    $group = 'Debian-exim'
+    $fpath = "/etc/exim4/conf.d/${name}"
+  } else {
+    $group = 'exim'
+    $fpath = "/etc/exim/conf.d/${name}"
   }
 
-  file{"/etc/exim/conf.d/${name}":
+  file{$fpath:
     require => Package['exim'],
-    notify => Service['exim'],
-    owner => root, group => $group, mode => 0640;
+    notify  => Service['exim'],
+    owner   => root,
+    group   => $group,
+    mode    => '0640';
   }
-  if ($content=='absent'){
-    File["/etc/exim/conf.d/${name}"]{
-      source => [ "puppet:///modules/site_exim/conf.d/${::fqdn}/${name}",
-                "puppet:///modules/site_exim/conf.d/${exim::component_type}/${name}",
-                "puppet:///modules/site_exim/conf.d/${exim::component_cluster}/${name}",
-                "puppet:///modules/site_exim/conf.d/${name}" ],
+  if ($content == 'absent') {
+    File[$fpath]{
+      source => [ "puppet:///modules/${exim::site_source}/conf.d/${::fqdn}/${name}",
+                "puppet:///modules/${exim::site_source}/conf.d/${exim::component_type}/${name}",
+                "puppet:///modules/${exim::site_source}/conf.d/${exim::component_cluster}/${name}",
+                "puppet:///modules/${exim::site_source}/conf.d/${name}" ],
     }
   } else {
-    File["/etc/exim/conf.d/${name}"]{
+    File[$fpath]{
       content => $content,
-    }
-  }
-  case $::operatingsystem {
-    'debian': {
-      File["/etc/exim/conf.d/${name}"]{
-        path => "/etc/exim4/conf.d/${name}"
-      }
     }
   }
 }

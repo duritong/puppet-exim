@@ -1,5 +1,6 @@
+# default debian installation
 class exim::default {
-  case $::operatingsystem {
-    centos,redhat,fedora: {  include exim::default::centos }
+  if $::osfamily == 'RedHat' {
+    include exim::default::centos
   }
 }

@@ -23,10 +23,11 @@ class exim(
   $component_cluster  = '',
   $type               = '',
   $default_mta        = true,
+  $site_source        = 'site_exim',
 ){
   case $::operatingsystem {
-    gentoo: { include exim::gentoo }
-    debian: { include exim::debian }
+    'Gentoo': { include exim::gentoo }
+    'Debian': { include exim::debian }
     default: { include exim::base }
   }
 

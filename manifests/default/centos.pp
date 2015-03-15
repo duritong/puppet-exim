@@ -1,3 +1,4 @@
+# manage the default mta
 class exim::default::centos {
   alternatives::manage{
     'mta':

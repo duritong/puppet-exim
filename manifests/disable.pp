@@ -1,5 +1,4 @@
+# disable exim
 class exim::disable {
-  case $::kernel {
-    linux: { include exim::disable::base }
-  }
+  include exim::disable::base
 }
