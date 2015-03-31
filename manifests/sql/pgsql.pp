@@ -8,4 +8,7 @@ class exim::sql::pgsql {
       }
     }
   }
+  if $exim::manage_shorewall {
+    include shorewall::rules::out::postgres
+  }
 }

@@ -8,4 +8,7 @@ class exim::sql::mysql {
       }
     }
   }
+  if $exim::manage_shorewall {
+    include shorewall::rules::out::mysql
+  }
 }
