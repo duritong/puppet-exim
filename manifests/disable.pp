@@ -1,4 +1,7 @@
 # disable exim
 class exim::disable {
-  include exim::disable::base
+  case $::osfamily {
+    'Debian': { include ::exim::disable::base }
+    default: { include ::exim::disable::base }
+  }
 }
