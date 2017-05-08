@@ -1,6 +1,7 @@
 # manage a config snippet
 define exim::config_snippet(
   $content = 'absent',
+  $source  = 'absent',
 ){
   if $::operatingsystem in ['Debian'] {
     $group = 'Debian-exim'
@@ -18,11 +19,16 @@ define exim::config_snippet(
     mode    => '0640';
   }
   if ($content == 'absent') {
-    File[$fpath]{
-      source => [ "puppet:///modules/${exim::site_source}/conf.d/${::fqdn}/${name}",
+    if $source == 'absent' {
+      $real_source = [ "puppet:///modules/${exim::site_source}/conf.d/${::fqdn}/${name}",
                 "puppet:///modules/${exim::site_source}/conf.d/${exim::component_type}/${name}",
                 "puppet:///modules/${exim::site_source}/conf.d/${exim::component_cluster}/${name}",
-                "puppet:///modules/${exim::site_source}/conf.d/${name}" ],
+                "puppet:///modules/${exim::site_source}/conf.d/${name}" ]
+    } else {
+      $real_source = $source
+    }
+    File[$fpath]{
+      source => $real_source,
     }
   } else {
     File[$fpath]{
