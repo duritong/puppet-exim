@@ -1,16 +1,19 @@
 # we ratelimit on $originator_uid, when submitting through "sendmail"-cli this is the user the cmd is invoked with
 # anybody submitting through local port 25 will be treated as the mail user, meaning a shared ratelimit
 deny
+     !condition = ${if forall{<, $recipients}{match{${domain:$item}}{$primary_hostname}}{yes}{no}}
      set acl_c_msg_limit_hourly=${lookup{$originator_uid}cdb*{/etc/exim/cdb/ratelimit_localforward.cdb}}
      ratelimit = $acl_c_msg_limit_hourly / 1h / strict / mailrate:$originator_uid
      message = You hit your hourly ratelimit - Contact your admins if you have questions about it
 
 deny
+     !condition = ${if forall{<, $recipients}{match{${domain:$item}}{$primary_hostname}}{yes}{no}}
      set acl_c_msg_limit_daily=${eval:${lookup{$originator_uid}cdb*{/etc/exim/cdb/ratelimit_localforward.cdb}}*4}
      ratelimit = $acl_c_msg_limit_daily / 1d / strict / mailrate:$originator_uid
      message = You hit your daily ratelimit - Contact your admins if you have questions about it
 
 deny
+     !condition = ${if forall{<, $recipients}{match{${domain:$item}}{$primary_hostname}}{yes}{no}}
      set acl_c_msg_limit_weekly=${eval:${lookup{$originator_uid}cdb*{/etc/exim/cdb/ratelimit_localforward.cdb}}*8}
      ratelimit = $acl_c_msg_limit_weekly / 1w / strict / mailrate:$originator_uid
      message = You hit your weekly ratelimit - Contact your admins if you have questions about it
