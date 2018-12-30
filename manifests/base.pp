@@ -28,6 +28,18 @@ class exim::base {
       mode    => '0640';
   }
 
+  include ::cdb
+  file{
+    '/etc/exim/cdb':
+      ensure   => directory,
+      checksum => none,
+      owner    => mail,
+      group    => mail,
+      mode     => '0750',
+      require => Package['exim','cdb'],
+      before  => Service['exim'];
+  }
+
   service{'exim':
     ensure => running,
     enable => true,
