@@ -11,7 +11,7 @@ class exim::ratelimit::localforward(
     group => 'mail',
     mode  => '0640',
   }
-  exim::ratelimit::localforward{'default':
+  exim::ratelimit::localforward::entry{'default':
     key       => '*',
     ratelimit => $default_ratelimit,
   }
