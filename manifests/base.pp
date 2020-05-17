@@ -1,5 +1,12 @@
 # base exim
 class exim::base {
+  if $facts['os']['name'] == 'CentOS' and (versioncmp($facts['os']['release']['major'],'8') < 0) {
+    package{
+      'publicsuffix-list':
+        ensure => 'installed',
+        before => Package['exim'],
+    }
+  }
   package{'exim':
     ensure => installed,
   }
