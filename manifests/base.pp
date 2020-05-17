@@ -35,7 +35,7 @@ class exim::base {
       mode    => '0640';
   }
 
-  include ::cdb
+  include cdb
   file{
     '/etc/exim/cdb':
       ensure   => directory,
@@ -43,8 +43,8 @@ class exim::base {
       owner    => mail,
       group    => mail,
       mode     => '0750',
-      require => Package['exim','cdb'],
-      before  => Service['exim'];
+      require  => Package['exim','cdb'],
+      before   => Service['exim'];
   }
 
   service{'exim':
