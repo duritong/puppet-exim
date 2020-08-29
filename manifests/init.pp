@@ -4,13 +4,13 @@
 
 # manage an exim installation
 class exim(
-  $pgsql              = false,
-  $mysql              = false,
-  $greylist           = false,
-  $ports              = [ '25', '465', '587' ],
-  $localonly          = false,
-  $manage_munin       = false,
-  $nagios_checks      = {
+  $pgsql             = false,
+  $mysql             = false,
+  $greylist          = false,
+  $ports             = [ '25', '465', '587' ],
+  $localonly         = false,
+  $manage_munin      = false,
+  $nagios_checks     = {
     '25'        => 'tls',
     '465'       => 'ssl',
     '587'       => 'tls',
@@ -18,12 +18,12 @@ class exim(
     'dnsbl'     => true,
     'hostname'  => $::fqdn,
   },
-  $manage_shorewall   = true,
-  $component_type     = '',
-  $component_cluster  = '',
-  $type               = '',
-  $default_mta        = true,
-  $site_source        = 'site_exim',
+  $manage_firewall   = true,
+  $component_type    = '',
+  $component_cluster = '',
+  $type              = '',
+  $default_mta       = true,
+  $site_source       = 'site_exim',
 ){
   case $::operatingsystem {
     'Gentoo': { include exim::gentoo }
@@ -49,19 +49,19 @@ class exim(
     include exim::default
   }
 
-  if $exim::manage_shorewall {
-    include shorewall::rules::out::smtp
+  if $exim::manage_firewall {
+    include firewall::rules::out::smtp
   }
   if !$localonly {
-    if $exim::manage_shorewall {
+    if $exim::manage_firewall {
       if '25' in $ports {
-        include shorewall::rules::smtp
+        include firewall::rules::smtp
       }
       if '587' in $ports {
-        include shorewall::rules::smtp_submission
+        include firewall::rules::smtp_submission
       }
       if '465' in $ports {
-        include shorewall::rules::smtps
+        include firewall::rules::smtps
       }
     }
 
