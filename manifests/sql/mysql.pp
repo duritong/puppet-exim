@@ -8,7 +8,7 @@ class exim::sql::mysql {
       }
     }
   }
-  if $exim::manage_shorewall {
-    include shorewall::rules::out::mysql
+  if $exim::manage_firewall {
+    include firewall::rules::out::mysql
   }
 }
