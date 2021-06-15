@@ -1,23 +1,23 @@
 # base exim
 class exim::base {
   if $facts['os']['name'] == 'CentOS' and (versioncmp($facts['os']['release']['major'],'8') < 0) {
-    package{
+    package {
       'publicsuffix-list':
         ensure => 'installed',
         before => Package['exim'],
     }
   }
-  package{'exim':
+  package { 'exim':
     ensure => installed,
   }
 
-  file{
+  file {
     '/etc/exim/exim.conf':
-      source  => ["puppet:///modules/${exim::site_source}/${::fqdn}/exim.conf",
-                  "puppet:///modules/${exim::site_source}/${exim::component_type}/exim.conf",
-                  "puppet:///modules/${exim::site_source}/${exim::component_cluster}/exim.conf",
-                  "puppet:///modules/${exim::site_source}/exim.conf",
-                  'puppet:///modules/exim/exim.conf' ],
+      source  => ["puppet:///modules/${exim::site_source}/${facts['networking']['fqdn']}/exim.conf",
+        "puppet:///modules/${exim::site_source}/${exim::component_type}/exim.conf",
+        "puppet:///modules/${exim::site_source}/${exim::component_cluster}/exim.conf",
+        "puppet:///modules/${exim::site_source}/exim.conf",
+      'puppet:///modules/exim/exim.conf'],
       require => Package['exim'],
       notify  => Service['exim'],
       owner   => root,
@@ -36,7 +36,7 @@ class exim::base {
   }
 
   include cdb
-  file{
+  file {
     '/etc/exim/cdb':
       ensure   => directory,
       checksum => none,
@@ -47,9 +47,8 @@ class exim::base {
       before   => Service['exim'];
   }
 
-  service{'exim':
+  service { 'exim':
     ensure => running,
     enable => true,
   }
-
 }
