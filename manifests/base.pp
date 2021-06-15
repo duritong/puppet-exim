@@ -41,7 +41,7 @@ class exim::base {
       ensure   => directory,
       checksum => none,
       owner    => mail,
-      group    => mail,
+      group    => exim,
       mode     => '0750',
       require  => Package['exim','cdb'],
       before   => Service['exim'];
