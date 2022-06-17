@@ -76,7 +76,6 @@ class exim(
       if $nagios_checks['dnsbl'] == true {
         nagios::service{"dnsbl_${facts['networking']['fqdn']}":
           check_command => "check_dnsbl!${nagios_checks['hostname']}",
-          ip4_and_ip6   => $nagios_checks['ip4_and_ip6'];
         }
       }
     }
